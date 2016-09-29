@@ -1,0 +1,16 @@
+0
+0
+Florida,D
+Pennsylvania,D
+Michigan,D
+North Carolina,R
+Ohio,R
+Colorado,D
+Minnesota,D
+Wisconson,D
+Virginia,D
+Nevada,R
+New Hampshire,D
+Arizona,R
+Iowa,R
+Georgia,R
