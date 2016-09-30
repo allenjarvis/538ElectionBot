@@ -10,7 +10,7 @@ api = TwitterAPI('y7uybSTbSXyHkve16gHaAgObI',
 
 sched = BlockingScheduler()
 
-@sched.scheduled_job('interval', minutes=10)
+@sched.scheduled_job('interval', minutes=5)
 def timed_job():
 	current = open("current.txt", 'r')
 	Hillary = current.readline()[0:-1]
