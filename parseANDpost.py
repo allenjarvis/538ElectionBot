@@ -17,16 +17,16 @@ def timed_job():
 	Donald = current.readline()[0:-1]
 	current.close
 
-	print Hillary
-	print Donald
+	print 'Hillary: ' + Hillary
+	print 'Donald: ' + Donald
 
 	page = requests.get('http://projects.fivethirtyeight.com/2016-election-forecast/')
 	tree = html.fromstring(page.content)
 	HillaryNew = tree.xpath('//*[@id="cardsets"]/div[1]/div/div[4]/div[1]/div/div[1]/div[1]/div[2]/p[2]/text()')[0]
 	DonaldNew = tree.xpath('//*[@id="cardsets"]/div[1]/div/div[4]/div[1]/div/div[1]/div[2]/div[1]/p[2]/text()')[0]
 
-	print HillaryNew
-	print DonaldNew
+	print 'HillaryNew: ' + HillaryNew
+	print 'DonaldNew: ' + DonaldNew
 
 	HillaryUP = 'Hillary is UP! Likelihood of a Clinton win went from ' + Hillary + ' to ' + HillaryNew
 	DonaldUP = 'Donald is UP. Likelihood of a Donald win went from ' + Donald + ' to ' + DonaldNew
