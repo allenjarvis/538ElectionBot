@@ -28,8 +28,8 @@ def timed_job():
 	print 'HillaryNew: ' + HillaryNew
 	print 'DonaldNew: ' + DonaldNew
 
-	HillaryUP = 'Hillary is UP! Likelihood of a Clinton win went from ' + Hillary + '% to ' + HillaryNew + '%.'
-	DonaldUP = 'Donald is UP. Likelihood of a Donald win went from ' + Donald + '% to ' + DonaldNew + '%.'
+	HillaryUP = 'Hillary is gaining! Likelihood of a Clinton win went from ' + Hillary + '% to ' + HillaryNew + '%. #Clinton'
+	DonaldUP = 'Donald is gaining. Likelihood of a Donald win went from ' + Donald + '% to ' + DonaldNew + '%. #Trump'
 
 	if float(HillaryNew) > float(Hillary):
 		r = api.request('statuses/update', {'status': HillaryUP})
