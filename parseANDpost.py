@@ -10,7 +10,7 @@ api = TwitterAPI('y7uybSTbSXyHkve16gHaAgObI',
 
 sched = BlockingScheduler()
 
-@sched.scheduled_job('interval', minutes=1)
+@sched.scheduled_job('interval', minutes=10)
 def timed_job():
 	current = open("current.txt", 'r')
 	Hillary = current.readline()[0:-1]
@@ -28,8 +28,8 @@ def timed_job():
 	print 'HillaryNew: ' + HillaryNew
 	print 'DonaldNew: ' + DonaldNew
 
-	HillaryUP = 'Hillary is UP! Likelihood of a Clinton win went from ' + Hillary + ' to ' + HillaryNew
-	DonaldUP = 'Donald is UP. Likelihood of a Donald win went from ' + Donald + ' to ' + DonaldNew
+	HillaryUP = 'Hillary is UP! Likelihood of a Clinton win went from ' + Hillary + '% to ' + HillaryNew + '%.'
+	DonaldUP = 'Donald is UP. Likelihood of a Donald win went from ' + Donald + '% to ' + DonaldNew + '%.'
 
 	if float(HillaryNew) > float(Hillary):
 		r = api.request('statuses/update', {'status': HillaryUP})
