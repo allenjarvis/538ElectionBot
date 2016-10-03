@@ -17,7 +17,7 @@ twitter = Twython(CONSUMER_KEY,CONSUMER_SECRET,ACCESS_KEY,ACCESS_SECRET)
 sched = BlockingScheduler()
 
 #this shit either
-@sched.scheduled_job('interval', minutes=0.1)
+@sched.scheduled_job('interval', minutes=0.5)
 def timed_job():
 	#get old values for Hillary and Donald from twitter, print to log
 	user_timeline = twitter.get_user_timeline(screen_name="electionbot538",count=1)
