@@ -42,7 +42,7 @@ def timed_job():
 	else:
 		if float(HillaryNew) > float(Hillary):
 			#post
-			HillaryUP = 'Hillary is gaining! Likelihood of a Clinton win went from ' + Hillary + '% to ' + HillaryNew + '%. #Clinton'
+			HillaryUP = 'Hillary is gaining! Likelihood of a Clinton win went from ' + Hillary + '% to ' + HillaryNew + '%. #Clinton #538update'
 			r = api.request('statuses/update', {'status': HillaryUP})
 			print 'SUCCESS' if r.status_code == 200 else 'FAILURE'
 			#set current values
@@ -51,7 +51,7 @@ def timed_job():
 			current.close
 		if float(DonaldNew) > float(Donald):
 			#post
-			DonaldUP = 'Donald is gaining. Likelihood of a Donald win went from ' + Donald + '% to ' + DonaldNew + '%. #Trump'
+			DonaldUP = 'Donald is gaining. Likelihood of a Donald win went from ' + Donald + '% to ' + DonaldNew + '%. #Trump #538update'
 			r = api.request('statuses/update', {'status': DonaldUP})
 			print 'SUCCESS' if r.status_code == 200 else 'FAILURE'
 			#set current values
