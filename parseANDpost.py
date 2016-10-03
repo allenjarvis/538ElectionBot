@@ -48,7 +48,7 @@ def timed_job():
 	#if values have changed post to Twitter
 	#case: tied
 	if DonaldNew==HillaryNew:
-		AllEven = "They're tied, folks. #Clinton #Trump #538update"
+		AllEven = "They're tied, folks. #Clinton #Trump #538update #538 #election2016"
 		twitter.update_status(status=AllEven)
 		print AllEven
 	#case: Hillary up
@@ -58,7 +58,7 @@ def timed_job():
 			leadstrails = 'leads'
 		else:
 			leadstrails = 'trails'
-		HillaryUP = 'Clinton gained ' + gain + '%! She now ' + leadstrails + ' Donald ' + HillaryNew + '% to ' + DonaldNew + "% in 538's polls-only forecast. #Clinton #Trump #538update"
+		HillaryUP = 'Clinton gained ' + gain + '%! She now ' + leadstrails + ' Donald ' + HillaryNew + '% to ' + DonaldNew + "% in 538's polls-only forecast. #Clinton #Trump #538update #538 #election2016"
 		twitter.update_status(status=HillaryUP)
 		print HillaryUP
 	#case: Donald up
@@ -68,7 +68,7 @@ def timed_job():
 			leadstrails = 'leads'
 		else:
 			leadstrails = 'trails'
-		DonaldUP = 'Donald gained ' + gain + '%. He now ' + leadstrails + ' Clinton ' + DonaldNew + '% to ' + HillaryNew + "% in 538's polls-only forecast. #Clinton #Trump #538update"
+		DonaldUP = 'Donald gained ' + gain + '%. He now ' + leadstrails + ' Clinton ' + DonaldNew + '% to ' + HillaryNew + "% in 538's polls-only forecast. #Clinton #Trump #538update #538 #election2016"
 		twitter.update_status(status=DonaldUP)
 		print DonaldUP
 	#case: no change
