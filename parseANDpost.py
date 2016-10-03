@@ -2,10 +2,6 @@ from lxml import html
 import requests
 from apscheduler.schedulers.blocking import BlockingScheduler
 from twython import Twython
-import logging
-
-#something for apscheduler
-logging.basicConfig()
 
 #sets twitter api keys... please don't steal my shit! Please!
 CONSUMER_KEY = 'y7uybSTbSXyHkve16gHaAgObI'
