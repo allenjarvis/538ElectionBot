@@ -2,6 +2,9 @@ from lxml import html
 import requests
 from apscheduler.schedulers.blocking import BlockingScheduler
 from twython import Twython
+import logging
+
+logging.basicConfig()
 
 #sets twitter api keys... please don't steal my shit! Please!
 CONSUMER_KEY = 'y7uybSTbSXyHkve16gHaAgObI'
@@ -14,7 +17,7 @@ twitter = Twython(CONSUMER_KEY,CONSUMER_SECRET,ACCESS_KEY,ACCESS_SECRET)
 sched = BlockingScheduler()
 
 #this shit either
-@sched.scheduled_job('interval', minutes=1)
+@sched.scheduled_job('interval', minutes=0.1)
 def timed_job():
 	#get old values for Hillary and Donald from twitter, print to log
 	user_timeline = twitter.get_user_timeline(screen_name="electionbot538",count=1)
@@ -28,7 +31,7 @@ def timed_job():
 		idx += 1
 
 	#set old values
-	if last[0]=='H':
+	if last[0]=='C':
 		Hillary = last[idx-4:idx]
 		Donald = last[idx+5:idx+9]
 	if last[0]=='D':
