@@ -58,7 +58,7 @@ def timed_job():
 			leadstrails = 'leads'
 		else:
 			leadstrails = 'trails'
-		HillaryUP = 'Hillary gained ' + gain + '%! She now ' + leadstrails + ' Donald ' + HillaryNew + '% to ' + DonaldNew + "% in 538's polls-only forecast. #Clinton #Trump #538update"
+		HillaryUP = 'Clinton gained ' + gain + '%! She now ' + leadstrails + ' Donald ' + HillaryNew + '% to ' + DonaldNew + "% in 538's polls-only forecast. #Clinton #Trump #538update"
 		#twitter.update_status(status=HillaryUP)
 		print HillaryUP
 	#case: Donald up
@@ -68,7 +68,7 @@ def timed_job():
 			leadstrails = 'leads'
 		else:
 			leadstrails = 'trails'
-		DonaldUP = 'Donald gained ' + gain + '%. He now ' + leadstrails + ' Hillary ' + DonaldNew + '% to ' + HillaryNew + "% in 538's polls-only forecast. #Clinton #Trump #538update"
+		DonaldUP = 'Donald gained ' + gain + '%. He now ' + leadstrails + ' Clinton ' + DonaldNew + '% to ' + HillaryNew + "% in 538's polls-only forecast. #Clinton #Trump #538update"
 		#twitter.update_status(status=DonaldUP)
 		print DonaldUP
 	#case: no change
