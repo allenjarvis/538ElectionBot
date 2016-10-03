@@ -1,13 +1,14 @@
 from lxml import html
 import requests
-from TwitterAPI import TwitterAPI
 from apscheduler.schedulers.blocking import BlockingScheduler
+from twython import Twython
 
 #sets twitter api keys... please don't steal my shit! Please!
-api = TwitterAPI('y7uybSTbSXyHkve16gHaAgObI',
-                 'gjSMPeCpletnARVihBl4hlYOTUMNsb5mTaU0pOr6eU89QvK0Lo',
-                 '781536298506985476-nBrmnvlkOf4F6HPEHK6AWOCyyPSLAfO',
-                 'KqOnzmQEfyGOhuqEft4t8XyALEp5XsEw6A40qh8W6l9DU')
+CONSUMER_KEY = 'y7uybSTbSXyHkve16gHaAgObI'
+CONSUMER_SECRET = 'gjSMPeCpletnARVihBl4hlYOTUMNsb5mTaU0pOr6eU89QvK0Lo'
+ACCESS_KEY = '781536298506985476-nBrmnvlkOf4F6HPEHK6AWOCyyPSLAfO'
+ACCESS_SECRET = 'KqOnzmQEfyGOhuqEft4t8XyALEp5XsEw6A40qh8W6l9DU'
+twitter = Twython(CONSUMER_KEY,CONSUMER_SECRET,ACCESS_KEY,ACCESS_SECRET)
 
 #no idea what this shit does... methinks this function returns something super trippy
 sched = BlockingScheduler()
@@ -15,11 +16,22 @@ sched = BlockingScheduler()
 #this shit either
 @sched.scheduled_job('interval', minutes=1)
 def timed_job():
-	#get old values for Hillary and Donald from current.txt, print to log
-	current = open("current.txt", 'r')
-	Hillary = current.readline()[0:-1]
-	Donald = current.readline()[0:-1]
-	current.close
+	#get old values for Hillary and Donald from twitter, print to log
+	user_timeline = twitter.get_user_timeline(screen_name="electionbot538",count=4)
+	for tweet in user_timeline:
+		last = tweet['text']
+	idx = 0
+	while last[idx] != '%':
+		idx += 1
+	old = last[idx+5:idx+9]
+
+	#set old values
+	if last[0]=='H':
+		Hillary = old
+		Donald = str(100-float(old))
+	if last[0]=='D':
+		Donald = old
+		Hillary = str(100-float(old))
 	print 'Hillary: ' + Hillary
 	print 'Donald: ' + Donald
 
@@ -31,35 +43,35 @@ def timed_job():
 	print 'HillaryNew: ' + HillaryNew
 	print 'DonaldNew: ' + DonaldNew
 
-	#set current values to 538's values if current values are "00.1"
-	#(this means that application was redeployed since last time script was run)
-	if Hillary == "00.1" and Donald == "00.1":
-		print "values reset"
-		current = open("current.txt", 'w')
-		current.write(HillaryNew + '\n' + DonaldNew + '\n')
-		current.close
 	#if values have changed post to Twitter
-	else:
-		if float(HillaryNew) > float(Hillary):
-			#post
-			HillaryUP = 'Hillary is gaining! Likelihood of a Clinton win went from ' + Hillary + '% to ' + HillaryNew + '%. #Clinton #538update'
-			r = api.request('statuses/update', {'status': HillaryUP})
-			print 'SUCCESS' if r.status_code == 200 else 'FAILURE'
-			#set current values
-			current = open("current.txt", 'w')
-			current.write(HillaryNew + '\n' + DonaldNew + '\n')
-			current.close
-		if float(DonaldNew) > float(Donald):
-			#post
-			DonaldUP = 'Donald is gaining. Likelihood of a Donald win went from ' + Donald + '% to ' + DonaldNew + '%. #Trump #538update'
-			r = api.request('statuses/update', {'status': DonaldUP})
-			print 'SUCCESS' if r.status_code == 200 else 'FAILURE'
-			#set current values
-			current = open("current.txt", 'w')
-			current.write(HillaryNew + '\n' + DonaldNew + '\n')
-			current.close
+	#case: tied
+	if DonaldNew==HillaryNew:
+		AllEven = "They're tied, folks. #Clinton #Trump #538update"
+		#twitter.update_status(status=AllEven)
+		print AllEven
+	#case: Hillary up
+	elif float(HillaryNew)>float(Hillary):
+		gain = str(float(HillaryNew) - float(Hillary))
+		if float(HillaryNew)>float(DonaldNew):
+			leadstrails = 'leads'
 		else:
-			print "No Change"
+			leadstrails = 'trails'
+		HillaryUP = 'Hillary gained ' + gain + '%! She now ' + leadstrails + ' Donald ' + HillaryNew + '% to ' + DonaldNew + "% in 538's polls-only forecast. #Clinton #Trump #538update"
+		#twitter.update_status(status=HillaryUP)
+		print HillaryUP
+	#case: Donald up
+	elif float(DonaldNew)>float(Donald):
+		gain = str(float(DonaldNew) - float(Donald))
+		if float(DonaldNew)>float(HillaryNew):
+			leadstrails = 'leads'
+		else:
+			leadstrails = 'trails'
+		DonaldUP = 'Donald gained ' + gain + '%. He now ' + leadstrails + ' Hillary ' + DonaldNew + '% to ' + HillaryNew + "% in 538's polls-only forecast. #Clinton #Trump #538update"
+		#twitter.update_status(status=DonaldUP)
+		print DonaldUP
+	#case: no change
+	else:
+		print "No Change"
 
 #makes scheduler run???
 sched.start()
