@@ -17,7 +17,7 @@ sched = BlockingScheduler()
 @sched.scheduled_job('interval', minutes=1)
 def timed_job():
 	#get old values for Hillary and Donald from twitter, print to log
-	user_timeline = twitter.get_user_timeline(screen_name="electionbot538",count=4)
+	user_timeline = twitter.get_user_timeline(screen_name="electionbot538",count=1)
 	for tweet in user_timeline:
 		last = tweet['text']
 	idx = 0
