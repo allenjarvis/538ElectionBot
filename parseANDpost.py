@@ -13,6 +13,14 @@ ACCESS_KEY = '781536298506985476-nBrmnvlkOf4F6HPEHK6AWOCyyPSLAfO'
 ACCESS_SECRET = 'KqOnzmQEfyGOhuqEft4t8XyALEp5XsEw6A40qh8W6l9DU'
 twitter = Twython(CONSUMER_KEY,CONSUMER_SECRET,ACCESS_KEY,ACCESS_SECRET)
 
+#test for ints
+def RepresentsInt(s):
+    try: 
+        int(s)
+        return True
+    except ValueError:
+        return False
+
 #no idea what this shit does... methinks this function returns something super trippy
 sched = BlockingScheduler()
 
@@ -20,15 +28,20 @@ sched = BlockingScheduler()
 @sched.scheduled_job('interval', minutes=1)
 def timed_job():
 	#get old values for Hillary and Donald from twitter, print to log
-	user_timeline = twitter.get_user_timeline(screen_name="electionbot538",count=1)
-	for tweet in user_timeline:
-		last = tweet['text']
+	tweetcounter = 1
 	idx = 0
-	while last[idx] != '%':
-		idx += 1
-	idx += 1
-	while last[idx] != '%':
-		idx += 1
+	last = "NaN"
+	while not RepresentsInt(last[idx-4:idx-2]) and not RepresentsInt(last[idx+5:idx+7]):
+		user_timeline = twitter.get_user_timeline(screen_name="electionbot538", count=tweetcounter, include_retweets=False)
+		idx = 0
+		for tweet in user_timeline:
+			last = tweet['text']
+			while last[idx] != '%':
+				idx += 1
+			idx += 1
+			while last[idx] != '%':
+				idx += 1
+		tweetcounter += 1
 
 	#set old values
 	if last[0]=='C':
@@ -52,7 +65,7 @@ def timed_job():
 	#case: tied
 	if DonaldNew==HillaryNew:
 		AllEven = "They're tied, folks. @FiveThirtyEight #Clinton #Trump #538 #election2016"
-		twitter.update_status(status=AllEven)
+		#twitter.update_status(status=AllEven)
 		print AllEven
 	#case: Hillary up
 	elif float(HillaryNew)>float(Hillary):
@@ -62,7 +75,7 @@ def timed_job():
 		else:
 			leadstrails = 'trails'
 		HillaryUP = 'Clinton gained ' + gain + '%! She now ' + leadstrails + ' Donald ' + HillaryNew + '% to ' + DonaldNew + "% in the @FiveThirtyEight polls-only forecast. #Clinton #Trump #538 #election2016"
-		twitter.update_status(status=HillaryUP)
+		#twitter.update_status(status=HillaryUP)
 		print HillaryUP
 	#case: Donald up
 	elif float(DonaldNew)>float(Donald):
@@ -72,7 +85,7 @@ def timed_job():
 		else:
 			leadstrails = 'trails'
 		DonaldUP = 'Donald gained ' + gain + '%. He now ' + leadstrails + ' Clinton ' + DonaldNew + '% to ' + HillaryNew + "% in the @FiveThirtyEight polls-only forecast. #Clinton #Trump #538 #election2016"
-		twitter.update_status(status=DonaldUP)
+		#twitter.update_status(status=DonaldUP)
 		print DonaldUP
 	#case: no change
 	else:
