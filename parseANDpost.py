@@ -27,14 +27,14 @@ sched = BlockingScheduler()
 #this shit either
 @sched.scheduled_job('interval', minutes=1)
 def timed_job():
-	#get old values for Hillary and Donald from twitter, print to log
+	#get last update tweet, find the second '%'
 	tweetcounter = 1
 	idx = 0
 	last = "NaN"
 	while not RepresentsInt(last[idx-4:idx-2]) and not RepresentsInt(last[idx+5:idx+7]):
 		user_timeline = twitter.get_user_timeline(screen_name="electionbot538", count=tweetcounter, include_retweets=False)
-		idx = 0
 		for tweet in user_timeline:
+			idx = 0
 			last = tweet['text']
 			while last[idx] != '%':
 				idx += 1
@@ -43,7 +43,7 @@ def timed_job():
 				idx += 1
 		tweetcounter += 1
 
-	#set old values
+	#set old values based on distance from second '%'
 	if last[0]=='C':
 		Hillary = last[idx-4:idx]
 		Donald = last[idx+5:idx+9]
