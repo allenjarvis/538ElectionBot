@@ -47,7 +47,7 @@ def find2Percent(my_string):
 sched = BlockingScheduler()
 
 #this shit either
-@sched.scheduled_job('interval', minutes=.1)
+@sched.scheduled_job('interval', minutes=1)
 def timed_job():
 	#get segment of last Tweet containing percentages, assign and print
 	gain, segment, tweetssince = getTweetSegment(2)
