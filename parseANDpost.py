@@ -28,7 +28,7 @@ sched = BlockingScheduler()
 @sched.scheduled_job('interval', minutes=1)
 def timed_job():
 	#get last update tweet, find the second '%'
-	tweetcounter = 2
+	tweetcounter = 1
 	idx = 0
 	last = "NaN"
 	while not RepresentsInt(last[idx-4:idx-2]) and not RepresentsInt(last[idx+5:idx+7]):
