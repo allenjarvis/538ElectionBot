@@ -32,7 +32,7 @@ def timed_job():
 	idx = 0
 	last = "NaN"
 	while not RepresentsInt(last[idx-4:idx-2]) and not RepresentsInt(last[idx+5:idx+7]):
-		user_timeline = twitter.get_user_timeline(screen_name="electionbot538", count=tweetcounter, include_retweets=False)
+		user_timeline = twitter.get_user_timeline(screen_name="electionbot538", count=tweetcounter, include_retweets=False, exclude_replies=True)
 		for tweet in user_timeline:
 			idx = 0
 			last = tweet['text']
