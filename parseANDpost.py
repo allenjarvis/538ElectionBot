@@ -50,7 +50,7 @@ sched = BlockingScheduler()
 @sched.scheduled_job('interval', minutes=1)
 def timed_job():
 	#get segment of last Tweet containing percentages, assign and print
-	gain, segment, tweetssince = getTweetSegment(2)
+	gain, segment, tweetssince = getTweetSegment(1)
 	print segment
 	print "Tweets since last update: " + tweetssince
 	if gain == "Clinton":
