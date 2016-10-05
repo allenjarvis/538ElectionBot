@@ -36,10 +36,10 @@ def timed_job():
 		for tweet in user_timeline:
 			idx = 0
 			last = tweet['text']
-			while last[idx] != '%' and idx<len(last)-1:
+			while idx<len(last)-1 and last[idx] != '%':
 				idx += 1
 			idx += 1
-			while last[idx] != '%' and idx<len(last)-1:
+			while idx<len(last)-1 and last[idx] != '%':
 				idx += 1
 		tweetcounter += 1
 
