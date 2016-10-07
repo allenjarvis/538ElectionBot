@@ -7,10 +7,10 @@ import logging
 logging.basicConfig()
 
 #sets twitter api keys... please don't steal my shit! Please!
-CONSUMER_KEY = 'y7uybSTbSXyHkve16gHaAgObI'
-CONSUMER_SECRET = 'gjSMPeCpletnARVihBl4hlYOTUMNsb5mTaU0pOr6eU89QvK0Lo'
-ACCESS_KEY = '781536298506985476-nBrmnvlkOf4F6HPEHK6AWOCyyPSLAfO'
-ACCESS_SECRET = 'KqOnzmQEfyGOhuqEft4t8XyALEp5XsEw6A40qh8W6l9DU'
+CONSUMER_KEY = 'BWat2mRWtkRknJ6qYk0D6Hcsq'
+CONSUMER_SECRET = 'V47euwkdq7H2AaAwDvSRWSNnDSkN5MpqVIsdpuiwTxmPsDu4EF'
+ACCESS_KEY = '781536298506985476-0aBtzyzdYwBIFNx40dK8bR16B6pkReZ'
+ACCESS_SECRET = 'VjJqVbNeBWgkwLySaBhsQlNn7gENaYl15czNmewJlURT2'
 twitter = Twython(CONSUMER_KEY,CONSUMER_SECRET,ACCESS_KEY,ACCESS_SECRET)
 
 #pulls tweets from timeline until it finds the last update. returns [previous gainer],[relevant segment of the tweet],[# of other tweets since last update]
