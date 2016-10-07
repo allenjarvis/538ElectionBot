@@ -13,7 +13,7 @@ ACCESS_KEY = '781536298506985476-nBrmnvlkOf4F6HPEHK6AWOCyyPSLAfO'
 ACCESS_SECRET = 'KqOnzmQEfyGOhuqEft4t8XyALEp5XsEw6A40qh8W6l9DU'
 twitter = Twython(CONSUMER_KEY,CONSUMER_SECRET,ACCESS_KEY,ACCESS_SECRET)
 
-#pulls tweets from timeline until it finds the last update (recursively). returns [previous gainer],[relevant segment of the tweet],[# of other tweets since last update]
+#pulls tweets from timeline until it finds the last update. returns [previous gainer],[relevant segment of the tweet],[# of other tweets since last update]
 def getTweetSegment(num):
 	user_timeline = twitter.get_user_timeline(screen_name="electionbot538", count=num, include_retweets=False, exclude_replies=True)
 	for tweet in user_timeline:
@@ -32,7 +32,7 @@ def getTweetSegment(num):
 	else:
 		return getTweetSegment(num+1)
 
-#finds 2nd "%" in a string, returns a segment of the string near that % (should look like "##.#% to ##.#%")
+#finds 2nd "%" in a string, returns a segment of the string near that %
 def find2Percent(my_string):
 	idx=0
 	while my_string[idx] != '%':
@@ -47,11 +47,12 @@ def find2Percent(my_string):
 sched = BlockingScheduler()
 
 #this shit either
-@sched.scheduled_job('interval', minutes=1)
+@sched.scheduled_job('interval', minutes=5)
 def timed_job():
 	#get segment of last Tweet containing percentages, assign and print
 	gain, segment, tweetssince = getTweetSegment(1)
-	print segment
+	print "---------------------------"
+	print "Last: " + gain + " increased... " + segment#(should look like "##.#% to ##.#%")
 	print "Tweets since last update: " + tweetssince
 	if gain == "Clinton":
 			Hillary = segment[0:4]
@@ -72,7 +73,7 @@ def timed_job():
 
 	#if values have changed post to Twitter
 	#case: tied
-	if DonaldNew==HillaryNew:
+	if Hillary != Donald and DonaldNew==HillaryNew:
 		AllEven = "They're tied, folks. @FiveThirtyEight #Clinton #Trump #538 #election2016"
 		twitter.update_status(status=AllEven)
 		print AllEven
