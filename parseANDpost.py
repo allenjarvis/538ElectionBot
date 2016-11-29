@@ -6,7 +6,7 @@ import logging
 
 logging.basicConfig()
 
-#sets twitter api keys... please don't steal my shit! Please!
+#these API keys are deactivated...
 CONSUMER_KEY = 'BWat2mRWtkRknJ6qYk0D6Hcsq'
 CONSUMER_SECRET = 'V47euwkdq7H2AaAwDvSRWSNnDSkN5MpqVIsdpuiwTxmPsDu4EF'
 ACCESS_KEY = '781536298506985476-0aBtzyzdYwBIFNx40dK8bR16B6pkReZ'
@@ -43,10 +43,10 @@ def find2Percent(my_string):
 	hollaback = my_string[idx-4:idx+10]
 	return hollaback
 
-#no idea what this shit does... methinks this function returns something super trippy
+#scheduler setup
 sched = BlockingScheduler()
 
-#this shit either
+#scheduler start
 @sched.scheduled_job('interval', minutes=5)
 def timed_job():
 	#get segment of last Tweet containing percentages, assign and print
@@ -101,5 +101,5 @@ def timed_job():
 	else:
 		print "No Change"
 
-#makes scheduler run???
+#makes scheduler run
 sched.start()
